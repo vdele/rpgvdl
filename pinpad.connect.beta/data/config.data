@@ -1,0 +1,19 @@
+#TRACE = 0;
+#DEBUG = 1;
+#INFO = 2;
+#WARN = 3;
+#ERROR = 4;
+#FATAL = 5;
+logLevel=1
+
+tileCharFile=tiles/tilechars.png
+nbCharTile=8
+widthChar=32
+heightChar=48
+
+
+menu=lbl:PAUSE|class:com.pconnect.business.menu.MenuPause
+menu0=lbl:CANCEL|action:cancel
+menu1=lbl:SAVE|action:save
+menu2=lbl:QUIT|action:quit
+
