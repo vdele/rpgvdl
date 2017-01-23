@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/pinpad.connect.iml" filepath="$PROJECT_DIR$/pinpad.connect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rpgvdl.iml" filepath="$PROJECT_DIR$/rpgvdl.iml" />
     </modules>
   </component>
 </project>
