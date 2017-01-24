@@ -3,7 +3,7 @@
  */
 package com.rpgvdl.entity.event.bo;
 
-import com.rpgvdl.entity.event.Event;
+import com.rpgvdl.business.map.impl.Event;
 
 
 /**
@@ -15,7 +15,7 @@ public class Coffre extends Event
 {
 
     /* (non-Javadoc)
-     * @see com.rpgvdl.entity.event.Event#activeEvent()
+     * @see com.rpgvdl.business.map.impl.Event#activeEvent()
      *
      */
     @Override

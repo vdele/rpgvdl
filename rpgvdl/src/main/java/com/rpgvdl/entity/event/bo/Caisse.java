@@ -3,7 +3,7 @@
  */
 package com.rpgvdl.entity.event.bo;
 
-import com.rpgvdl.entity.event.Event;
+import com.rpgvdl.business.map.impl.Event;
 
 
 /**

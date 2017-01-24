@@ -12,18 +12,18 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import com.rpgvdl.entity.event.bo.Person;
-import com.rpgvdl.entity.event.itf.IEvent;
+import com.rpgvdl.business.map.IEvent;
 import com.rpgvdl.entity.event.itf.IPerson;
-import com.rpgvdl.factory.gui.Board;
-import com.rpgvdl.factory.gui.Map;
-import com.rpgvdl.factory.parsing.ConfigData;
-import com.rpgvdl.factory.parsing.MapData;
-import com.rpgvdl.factory.running.InstanceManager;
-import com.rpgvdl.factory.running.Logger;
-import com.rpgvdl.factory.running.Menu;
-import com.rpgvdl.factory.running.itf.IConfig;
-import com.rpgvdl.factory.running.itf.IInstanceManager;
-import com.rpgvdl.factory.util.Invoker;
+import com.rpgvdl.business.Board;
+import com.rpgvdl.business.map.impl.Map;
+import com.rpgvdl.system.parsing.ConfigData;
+import com.rpgvdl.system.parsing.MapData;
+import com.rpgvdl.system.impl.InstanceManager;
+import com.rpgvdl.system.impl.Logger;
+import com.rpgvdl.business.menu.impl.Menu;
+import com.rpgvdl.system.IConfig;
+import com.rpgvdl.system.IInstanceManager;
+import com.rpgvdl.system.util.Invoker;
 
 
 /**
@@ -39,14 +39,14 @@ public class AppLoader
      * TODO define instance in file and read it to create instance
      */
     private static void loadSupport(){
-        InstanceManager.addInstance(IInstanceManager.CONFIG, "com.rpgvdl.factory.running.Config");
+        InstanceManager.addInstance(IInstanceManager.CONFIG, "com.rpgvdl.system.config.Config");
 
         AppLoader.log.logInfo("Config class has been instanciated");
 
         addBoardInstance();
 
 
-        InstanceManager.addInstance("EventHelper", "com.rpgvdl.entity.event.EventHelper");
+        InstanceManager.addInstance("EventHelper", "com.rpgvdl.business.map.impl.EventHelper");
         AppLoader.log.logInfo("Board class has been instanciated");
     }
 
@@ -65,7 +65,7 @@ public class AppLoader
     private static void addBoardInstance(){
 
         if(!existSavedGame()) {
-            InstanceManager.addInstance("Board", "com.rpgvdl.factory.gui.Board");
+            InstanceManager.addInstance("Board", "com.rpgvdl.business.Board");
             AppLoader.log.logInfo("Board class has been instanciated");
         }
         else{
@@ -73,11 +73,14 @@ public class AppLoader
         }
     }
 
+
+    // TODO put this method in another class util
     private static Object getSavedGame(){
         // TODO à implementer
         return null;
     }
 
+    // TODO put this method in another class util
     private static boolean existSavedGame(){
         // TODO à implementer
         return false;

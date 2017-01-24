@@ -4,6 +4,7 @@
 
 package com.rpgvdl.entity.event.itf;
 
+import com.rpgvdl.business.map.IMobileEvent;
 import com.rpgvdl.entity.event.bo.Person;
 
 /**

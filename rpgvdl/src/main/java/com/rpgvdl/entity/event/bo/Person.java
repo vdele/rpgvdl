@@ -3,9 +3,9 @@
  */
 package com.rpgvdl.entity.event.bo;
 
-import com.rpgvdl.entity.event.MobileEvent;
+import com.rpgvdl.business.map.impl.MobileEvent;
 import com.rpgvdl.entity.event.itf.IPerson;
-import com.rpgvdl.factory.util.FactoryUtils;
+import com.rpgvdl.system.util.FactoryUtils;
 
 
 /**

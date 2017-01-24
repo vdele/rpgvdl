@@ -5,10 +5,10 @@ package com.rpgvdl.main;
 
 import javax.swing.JFrame;
 
-import com.rpgvdl.factory.gui.Board;
-import com.rpgvdl.factory.gui.Displayer;
-import com.rpgvdl.factory.running.InstanceManager;
-import com.rpgvdl.factory.running.itf.IInstanceManager;
+import com.rpgvdl.business.Board;
+import com.rpgvdl.system.gui.Displayer;
+import com.rpgvdl.system.impl.InstanceManager;
+import com.rpgvdl.system.IInstanceManager;
 
 
 /**

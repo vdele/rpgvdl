@@ -5,11 +5,11 @@ import java.lang.reflect.Method;
 
 import com.rpgvdl.entity.event.bo.Person;
 import com.rpgvdl.entity.event.itf.IPerson;
-import com.rpgvdl.factory.parsing.NameData;
-import com.rpgvdl.factory.running.Logger;
-import com.rpgvdl.factory.util.FactoryUtils;
-import com.rpgvdl.factory.util.Invoker;
-import com.rpgvdl.factory.util.ParsingFactory;
+import com.rpgvdl.system.parsing.NameData;
+import com.rpgvdl.system.impl.Logger;
+import com.rpgvdl.system.util.FactoryUtils;
+import com.rpgvdl.system.util.Invoker;
+import com.rpgvdl.system.util.ParsingFactory;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -90,7 +90,7 @@ extends TestCase
         final Object ret = m.invoke(valueObject, new Object[] {});
         assertEquals(11, ret);
 
-        Invoker.invokeMethod("com.rpgvdl.factory.util.Invoker", "test");
+        Invoker.invokeMethod("com.rpgvdl.system.util.Invoker", "test");
     }
 
     public void testLogger(){

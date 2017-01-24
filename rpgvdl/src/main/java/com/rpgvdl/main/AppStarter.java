@@ -1,7 +1,7 @@
 package com.rpgvdl.main;
 
 import com.rpgvdl.entity.event.bo.Person;
-import com.rpgvdl.factory.running.Ring;
+import com.rpgvdl.business.ring.Ring;
 
 
 /**
