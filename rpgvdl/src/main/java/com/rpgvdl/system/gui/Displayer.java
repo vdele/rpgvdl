@@ -25,7 +25,7 @@ import com.rpgvdl.system.impl.InstanceManager;
 import com.rpgvdl.system.impl.Logger;
 import com.rpgvdl.system.IConfig;
 import com.rpgvdl.system.IInstanceManager;
-import com.rpgvdl.business.menu.IItemMenu;
+import com.rpgvdl.business.display.menu.IItemMenu;
 
 
 /**
@@ -151,7 +151,7 @@ public class Displayer extends JPanel implements ActionListener
      * @param g
      */
     private void drawMessageBox(final Graphics g) {
-        if(board.messageIsDisplayed()){
+        if(board.getMessageBox().messageIsDisplayed()){
             final Graphics2D g2 = (Graphics2D)g;
             g2.setStroke(new BasicStroke( 5.0f ));
 
@@ -167,7 +167,7 @@ public class Displayer extends JPanel implements ActionListener
             g2.drawRect(boxPosX,  boxPosY, boxWidth, boxHeight);
 
             g.setFont(config.getFontMessage());
-            g.drawString(board.getMsgBoxText(), boxPosX+20, boxPosY+20);
+            g.drawString(board.getMessageBox().getMsgBoxText(), boxPosX+20, boxPosY+20);
         }
     }
     /**

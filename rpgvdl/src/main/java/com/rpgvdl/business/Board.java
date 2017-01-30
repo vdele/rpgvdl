@@ -6,11 +6,12 @@ package com.rpgvdl.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rpgvdl.business.display.messageBox.MessageBox;
 import com.rpgvdl.business.map.impl.Map;
 import com.rpgvdl.business.map.IEvent;
 import com.rpgvdl.entity.event.itf.IPerson;
 import com.rpgvdl.system.impl.Logger;
-import com.rpgvdl.business.menu.IMenu;
+import com.rpgvdl.business.display.menu.IMenu;
 
 
 /**
@@ -25,8 +26,8 @@ public class Board
     private boolean displayBackground = false;
     private boolean displayCharacter = false;
     private boolean inPause = false;
-    private boolean displayMessage = false;
-    private String messageText = null;
+
+    private MessageBox messageBox = null;
 
     public int SCREEN_WIDTH = 400;
 
@@ -63,10 +64,6 @@ public class Board
         return displayCharacter;
     }
 
-    public  void disableMsgBox(){
-        displayMessage = false;
-        messageText = null;
-    }
 
     /**
      *
@@ -90,7 +87,7 @@ public class Board
     }
 
     public  boolean gameIsStopped(){
-        return gameInPause() || messageIsDisplayed();
+        return gameInPause() || getMessageBox().messageIsDisplayed();
     }
 
     public List<IEvent> getEvents(){
@@ -126,17 +123,9 @@ public class Board
         return map;
     }
 
-    public  String getMsgBoxText(){
-        return messageText;
-    }
 
     public boolean isBackgroundDisplayed(){
         return displayBackground;
-    }
-
-
-    public  boolean messageIsDisplayed(){
-        return displayMessage;
     }
 
 
@@ -145,7 +134,7 @@ public class Board
      *
      */
     public  void pause() {
-        if(!messageIsDisplayed()){
+        if(!getMessageBox().messageIsDisplayed()){
             inPause = !inPause;
             log.logInfo(inPause ? "Starts pause" : "Ends pause");
             if (inPause) {
@@ -158,16 +147,13 @@ public class Board
         this.map=new Map(map);
     }
 
-    /**
-     * @param string
-     */
-    public  void showMsgBox(final String text) {
-        if(!gameInPause()){
-            log.logInfo("Displaying message : @", text);
-            displayMessage = true;
-            messageText = text;
+    public MessageBox getMessageBox(){
+        if(messageBox == null){
+            messageBox = new MessageBox();
         }
+        return messageBox;
     }
+
 
 }
 

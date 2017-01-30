@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.rpgvdl.business.menu;
+package com.rpgvdl.business.display.menu;
 
 
 /**

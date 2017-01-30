@@ -16,7 +16,7 @@ public class Caisse extends Event
 
     @Override
     public void runEvent() {
-        board.showMsgBox("Hello I'm a caisse");
+        board.getMessageBox().showMsgBox("Hello I'm a caisse");
     }
 
 }

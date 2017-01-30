@@ -25,8 +25,8 @@ public abstract class Event extends MapElement implements IEvent {
      * @see com.rpgvdl.business.map.IEvent#activeEvent()
      */
     public final void activeEvent() {
-        consumeEvent();
         runEvent();
+        consumeEvent();
     }
 
     private void consumeEvent() {

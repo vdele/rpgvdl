@@ -1,9 +1,9 @@
 /**
  *
  */
-package com.rpgvdl.business.menu.impl;
+package com.rpgvdl.business.display.menu.impl;
 
-import com.rpgvdl.business.menu.IItemMenu;
+import com.rpgvdl.business.display.menu.IItemMenu;
 
 
 /**

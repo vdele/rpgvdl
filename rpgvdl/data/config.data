@@ -12,7 +12,7 @@ widthChar=32
 heightChar=48
 
 
-menu=lbl:PAUSE|class:com.rpgvdl.business.menu.impl.MenuPause
+menu=lbl:PAUSE|class:com.rpgvdl.business.display.menu.impl.MenuPause
 menu0=lbl:CANCEL|action:cancel
 menu1=lbl:SAVE|action:save
 menu2=lbl:QUIT|action:quit

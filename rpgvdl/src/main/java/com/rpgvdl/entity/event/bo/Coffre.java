@@ -20,7 +20,7 @@ public class Coffre extends Event
      */
     @Override
     public void runEvent() {
-        board.showMsgBox("Hello I'm a coffre");
+        board.getMessageBox().showMsgBox("Hello I'm a coffre");
     }
 
 }

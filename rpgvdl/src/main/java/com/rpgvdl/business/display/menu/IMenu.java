@@ -1,10 +1,10 @@
 /**
  *
  */
-package com.rpgvdl.business.menu;
+package com.rpgvdl.business.display.menu;
 
 
-import com.rpgvdl.business.menu.IItemMenu;
+import com.rpgvdl.business.display.menu.IItemMenu;
 
 /**
  * @author 20002845

@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="pinpad.connect" />
+        <module name="rpgvdl" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="pinpad.connect" target="1.5" />
+      <module name="rpgvdl" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

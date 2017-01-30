@@ -1,14 +1,13 @@
 /**
  *
  */
-package com.rpgvdl.business.menu.impl;
+package com.rpgvdl.business.display.menu.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rpgvdl.business.menu.IItemMenu;
-import com.rpgvdl.business.menu.impl.ItemMenu;
-import com.rpgvdl.business.menu.IMenu;
+import com.rpgvdl.business.display.menu.IItemMenu;
+import com.rpgvdl.business.display.menu.IMenu;
 import com.rpgvdl.system.impl.Logger;
 import com.rpgvdl.system.util.Invoker;
 

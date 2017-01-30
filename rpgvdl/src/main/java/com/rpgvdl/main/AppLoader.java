@@ -20,7 +20,7 @@ import com.rpgvdl.system.parsing.ConfigData;
 import com.rpgvdl.system.parsing.MapData;
 import com.rpgvdl.system.impl.InstanceManager;
 import com.rpgvdl.system.impl.Logger;
-import com.rpgvdl.business.menu.impl.Menu;
+import com.rpgvdl.business.display.menu.impl.Menu;
 import com.rpgvdl.system.IConfig;
 import com.rpgvdl.system.IInstanceManager;
 import com.rpgvdl.system.util.Invoker;

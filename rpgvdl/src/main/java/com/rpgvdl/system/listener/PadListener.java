@@ -22,12 +22,12 @@ public class PadListener implements KeyListener
     private final int NO_BACKGROUND=KeyEvent.VK_F1;
     private final int DISPLAY_CHAR=KeyEvent.VK_F2;
     private final int PAUSE=KeyEvent.VK_ESCAPE;
-    private final int F12=KeyEvent.VK_F12;
+    private final int F12_EXIT =KeyEvent.VK_F12;
     private final int TEST_MSG_BOX=KeyEvent.VK_F11;
     private final int VALIDATION_KEY1=KeyEvent.VK_ENTER;
     private final int VALIDATION_KEY2=KeyEvent.VK_SPACE;
 
-    final int[] USED_TOUCH = {NO_BACKGROUND,DISPLAY_CHAR,PAUSE,F12,TEST_MSG_BOX};
+    final int[] USED_TOUCH = {NO_BACKGROUND,DISPLAY_CHAR,PAUSE, F12_EXIT,TEST_MSG_BOX};
     final int[] VALIDATION_KEYS = {VALIDATION_KEY1,VALIDATION_KEY2};
 
     private Board board = null;
@@ -55,14 +55,14 @@ public class PadListener implements KeyListener
                 break;
 
             case TEST_MSG_BOX:
-                if(!board.messageIsDisplayed()) {
-                    board.showMsgBox("Just a test");
+                if(!board.getMessageBox().messageIsDisplayed()) {
+                    board.getMessageBox().showMsgBox("Just a test");
                 } else {
-                    board.disableMsgBox();
+                    board.getMessageBox().disableMsgBox();
                 }
                 break;
 
-            case F12:                
+            case F12_EXIT:
                 System.exit(0);
                 break;
 
@@ -149,9 +149,9 @@ public class PadListener implements KeyListener
                 break;
             }
         }
-        else if(board.messageIsDisplayed()){
+        else if(board.getMessageBox().messageIsDisplayed()){
             if(isValidationKey(keyCode)){
-                board.disableMsgBox();
+                board.getMessageBox().disableMsgBox();
             }
         }
         else {
