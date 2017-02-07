@@ -7,15 +7,14 @@ import com.rpgvdl.business.map.IEventHelper;
 import com.rpgvdl.business.map.IMobileEvent;
 import com.rpgvdl.entity.event.itf.IPerson;
 import com.rpgvdl.business.Board;
-import com.rpgvdl.system.impl.InstanceManager;
-import com.rpgvdl.system.IInstanceManager;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 public class EventHelper implements IEventHelper {
 
     protected Board board = null;
 
     public EventHelper() {
-        board = (Board) InstanceManager.getInstance(IInstanceManager.BOARD);
+        board = RPGVDLManager.getBoard();
     }
 
     public int calculateNewValue(final IMobileEvent evt, final boolean horizontalMovement, final int increaseMov, final int movement) {

@@ -18,12 +18,12 @@ import com.rpgvdl.business.Board;
 import com.rpgvdl.business.map.impl.Map;
 import com.rpgvdl.system.parsing.ConfigData;
 import com.rpgvdl.system.parsing.MapData;
-import com.rpgvdl.system.impl.InstanceManager;
 import com.rpgvdl.system.impl.Logger;
 import com.rpgvdl.business.display.menu.impl.Menu;
 import com.rpgvdl.system.IConfig;
-import com.rpgvdl.system.IInstanceManager;
 import com.rpgvdl.system.util.Invoker;
+import com.rpgvdl.system.manager.RPGVDLManager;
+import com.rpgvdl.system.util.SaveManager;
 
 
 /**
@@ -33,21 +33,17 @@ import com.rpgvdl.system.util.Invoker;
  */
 public class AppLoader
 {
-    private static Logger log = new Logger(AppLoader.class);
+    private Logger log = new Logger(this.getClass());
 
     /**
      * TODO define instance in file and read it to create instance
      */
-    private static void loadSupport(){
-        InstanceManager.addInstance(IInstanceManager.CONFIG, "com.rpgvdl.system.config.Config");
-
-        AppLoader.log.logInfo("Config class has been instanciated");
-
+    private void loadSupport(){
+        RPGVDLManager.setNewConfig();
+        log.logInfo("Config class has been instanciated");
         addBoardInstance();
-
-
-        InstanceManager.addInstance("EventHelper", "com.rpgvdl.business.map.impl.EventHelper");
-        AppLoader.log.logInfo("Board class has been instanciated");
+        RPGVDLManager.setNewEventHelper();
+        log.logInfo("Board class has been instanciated");
     }
 
     private Board board = null;;
@@ -56,56 +52,22 @@ public class AppLoader
 
     public AppLoader(){
         loadSupport();
-        board = (Board) InstanceManager.getInstance(IInstanceManager.BOARD);
-        config = (IConfig) InstanceManager.getInstance(IInstanceManager.CONFIG);
+        board = RPGVDLManager.getBoard();
+        config = RPGVDLManager.getConfig();
         // log need config to be usable
 
     }
 
-    private static void addBoardInstance(){
 
-        if(!existSavedGame()) {
-            InstanceManager.addInstance("Board", "com.rpgvdl.business.Board");
-            AppLoader.log.logInfo("Board class has been instanciated");
+    private void addBoardInstance(){
+        Board board = SaveManager.loadGame();
+        if(board == null) {
+            RPGVDLManager.setNewBoard();
         }
         else{
-            InstanceManager.addInstance("Board", getSavedGame());
+            RPGVDLManager.setExistingBoard(board);
         }
-    }
-
-
-    // TODO put this method in another class util
-    private static Object getSavedGame(){
-        // TODO à implementer
-        return null;
-    }
-
-    // TODO put this method in another class util
-    private static boolean existSavedGame(){
-        // TODO à implementer
-        return false;
-    }
-
-    public void defineMenuPause(final List<String> menuPause){
-        if(menuPause!=null && menuPause.size()>0){
-            board.MENU_PAUSE = new Menu();
-            for(final String menuItemLabel : menuPause){
-                final String[] info = menuItemLabel.split("=");
-                final String name=info[0];
-                if(name.equals("menu")) {
-                    final String[] partToParse = info[1].split("\\|");
-                    final String label = partToParse[0].split(":")[1];
-                    final String className = partToParse[1].split(":")[1];
-                    board.MENU_PAUSE.setTitle(label);
-                    board.MENU_PAUSE.setClassName(className);
-                } else {
-                    final String[] partToParse = info[1].split("\\|");
-                    final String label = partToParse[0].split(":")[1];
-                    final String action = partToParse[1].split(":")[1];
-                    board.MENU_PAUSE.addItemMenu(label,name,action);
-                }
-            }
-        }
+        log.logInfo("Board class has been instanciated");
     }
 
     /**
@@ -135,20 +97,7 @@ public class AppLoader
         board.addEvent(person);
     }
 
-    /**
-     * @throws Exception
-     *
-     */
-    private void setupConfig() throws Exception {
-        final ConfigData cfgData = new ConfigData();
-        config.defineLogLevel(cfgData.getConfigValue("logLevel"));
-        //        tileCharFile=tiles/tilechars.png
-        config.setTileCharSet(cfgData.getConfigValue("tileCharFile"));
-        config.setApplicationParameters(cfgData.getAllParams());
-        defineMenuPause(cfgData.getMenuPauseInformation());
-        AppLoader.log.logInfo("Configuration has succesfully been set.");
 
-    }
 
     /**
      * @param mapData
@@ -174,6 +123,53 @@ public class AppLoader
         }
 
     }
+
+
+
+    public void start() throws Exception{
+        setupConfig();
+        setupMap();
+        setupCharacter();
+
+    }
+
+    /**
+     * @throws Exception
+     *
+     */
+    private void setupConfig() throws Exception {
+        final ConfigData cfgData = new ConfigData();
+        config.defineLogLevel(cfgData.getConfigValue("logLevel"));
+        //        tileCharFile=tiles/tilechars.png
+        config.setTileCharSet(cfgData.getConfigValue("tileCharFile"));
+        config.setApplicationParameters(cfgData.getAllParams());
+        defineMenuPause(cfgData.getMenuPauseInformation());
+        log.logInfo("Configuration has succesfully been set.");
+
+    }
+
+    private void defineMenuPause(final List<String> menuPause){
+        if(menuPause!=null && menuPause.size()>0){
+            board.MENU_PAUSE = new Menu();
+            for(final String menuItemLabel : menuPause){
+                final String[] info = menuItemLabel.split("=");
+                final String name=info[0];
+                if(name.equals("menu")) {
+                    final String[] partToParse = info[1].split("\\|");
+                    final String label = partToParse[0].split(":")[1];
+                    final String className = partToParse[1].split(":")[1];
+                    board.MENU_PAUSE.setTitle(label);
+                    board.MENU_PAUSE.setClassName(className);
+                } else {
+                    final String[] partToParse = info[1].split("\\|");
+                    final String label = partToParse[0].split(":")[1];
+                    final String action = partToParse[1].split(":")[1];
+                    board.MENU_PAUSE.addItemMenu(label,name,action);
+                }
+            }
+        }
+    }
+
 
     /**
      * @throws Exception
@@ -202,17 +198,10 @@ public class AppLoader
 
         setupEventsMap(mapData);
 
-        AppLoader.log.logInfo("Map has succesfully been set.");
+        log.logInfo("Map has succesfully been set.");
 
 
     }
 
-
-    public void start() throws Exception{
-        setupConfig();
-        setupMap();
-        setupCharacter();
-
-    }
 }
 

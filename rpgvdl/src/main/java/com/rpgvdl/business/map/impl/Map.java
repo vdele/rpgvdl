@@ -1,13 +1,14 @@
 package com.rpgvdl.business.map.impl;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 // TODO pourri comme nom
-public class Map {
+public class Map implements Serializable{
 
     private int[][] map = null;
 
-    public BufferedImage[] IMG_CASE = null;
+    public transient BufferedImage[] IMG_CASE = null;
 
     public int CASE_SIZE = 32;
 

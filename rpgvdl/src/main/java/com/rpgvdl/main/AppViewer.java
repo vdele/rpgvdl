@@ -7,8 +7,7 @@ import javax.swing.JFrame;
 
 import com.rpgvdl.business.Board;
 import com.rpgvdl.system.gui.Displayer;
-import com.rpgvdl.system.impl.InstanceManager;
-import com.rpgvdl.system.IInstanceManager;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 
 /**
@@ -23,7 +22,7 @@ public class AppViewer
 
     private Board board = null;
     public AppViewer(){
-        board = (Board)InstanceManager.getInstance(IInstanceManager.BOARD);
+        board = RPGVDLManager.getBoard();
     }
 
 

@@ -13,8 +13,6 @@ import com.rpgvdl.system.impl.Logger;
  */
 public abstract class Event extends MapElement implements IEvent {
 
-    protected Logger log = new Logger(this.getClass());
-
     private boolean hasBeenConsumed = false;
 
     public Event(){

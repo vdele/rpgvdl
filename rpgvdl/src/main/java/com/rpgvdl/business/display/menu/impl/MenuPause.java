@@ -4,9 +4,9 @@
 package com.rpgvdl.business.display.menu.impl;
 
 import com.rpgvdl.business.Board;
-import com.rpgvdl.system.impl.InstanceManager;
 import com.rpgvdl.system.impl.Logger;
-import com.rpgvdl.system.IInstanceManager;
+import com.rpgvdl.system.manager.RPGVDLManager;
+import com.rpgvdl.system.util.SaveManager;
 
 
 /**
@@ -21,7 +21,7 @@ public class MenuPause
     Logger log = new Logger(this.getClass());
 
     public MenuPause(){
-        board = (Board)InstanceManager.getInstance(IInstanceManager.BOARD);
+        board = RPGVDLManager.getBoard();
     }
 
     public void cancel(){
@@ -32,8 +32,8 @@ public class MenuPause
         System.exit(0);
     }    
     public void save(){
-        log.logInfo("method save is not implemented");
-        throw new UnsupportedOperationException("");
+        log.logInfo("Saving the game ...");
+        SaveManager.saveGame();
     }
 }
 

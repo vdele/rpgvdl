@@ -24,4 +24,6 @@ public interface IConfig {
 
     public void setTileCharSet(final String tileCharSet);
 
+    public int getLogLevel();
+
 }

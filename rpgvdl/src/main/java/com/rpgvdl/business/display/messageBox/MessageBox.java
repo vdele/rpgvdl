@@ -1,9 +1,8 @@
 package com.rpgvdl.business.display.messageBox;
 
 import com.rpgvdl.business.Board;
-import com.rpgvdl.system.IInstanceManager;
-import com.rpgvdl.system.impl.InstanceManager;
 import com.rpgvdl.system.impl.Logger;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +33,13 @@ public class MessageBox {
      * @param text
      */
     public  void showMsgBox(final String text) {
-        Board board = getBoard();
+        Board board = RPGVDLManager.getBoard();
         if(!board.gameInPause()){
             log.logInfo("Displaying message : @", text);
             messageText.add(text);
         }
     }
 
-    private Board board = null;
-
-    private Board getBoard(){
-        if(board == null)
-            board = (Board) InstanceManager.getInstance(IInstanceManager.BOARD);
-
-        return board;
-    }
 
     public  boolean messageIsDisplayed(){
         return messageText.size()>0;

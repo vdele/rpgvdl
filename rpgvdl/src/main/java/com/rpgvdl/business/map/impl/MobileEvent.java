@@ -7,8 +7,7 @@ import java.awt.image.BufferedImage;
 import com.rpgvdl.business.map.IEvent;
 import com.rpgvdl.business.map.IEventHelper;
 import com.rpgvdl.business.map.IMobileEvent;
-import com.rpgvdl.system.impl.InstanceManager;
-import com.rpgvdl.system.IInstanceManager;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 public abstract class MobileEvent extends Event implements IMobileEvent {
 
@@ -26,11 +25,8 @@ public abstract class MobileEvent extends Event implements IMobileEvent {
 
     public int stepMovement = 6;
 
-    protected IEventHelper eventHelper;
-
     public MobileEvent() {
         super();
-        eventHelper = (IEventHelper) InstanceManager.getInstance(IInstanceManager.EVENT_HELPER);
     }
 
     /**
@@ -42,9 +38,9 @@ public abstract class MobileEvent extends Event implements IMobileEvent {
      */
     public void defineNewCoord(final boolean horizontalMovement, final int increaseMov, final int movement) {
         if(horizontalMovement){
-            setX(eventHelper.calculateNewValue(this,horizontalMovement, increaseMov, movement));
+            setX(RPGVDLManager.getEventHelper().calculateNewValue(this,horizontalMovement, increaseMov, movement));
         } else {
-            setY(eventHelper.calculateNewValue(this,horizontalMovement, increaseMov, movement));
+            setY(RPGVDLManager.getEventHelper().calculateNewValue(this,horizontalMovement, increaseMov, movement));
         }
     }
 
@@ -62,7 +58,7 @@ public abstract class MobileEvent extends Event implements IMobileEvent {
     public void executeVerticalMovement(final boolean increase,final boolean horizontalMovement) {
         int movement = stepMovement;
         final int increaseMov = increase ? 1 : -1;
-        while (eventHelper.isInTheWall(this,horizontalMovement,eventHelper.calculateNewValue(this,horizontalMovement, increaseMov, movement)) && movement > 0) {
+        while (RPGVDLManager.getEventHelper().isInTheWall(this,horizontalMovement,RPGVDLManager.getEventHelper().calculateNewValue(this,horizontalMovement, increaseMov, movement)) && movement > 0) {
             movement--;
         }
         defineNewCoord(horizontalMovement, increaseMov, movement);
@@ -78,7 +74,7 @@ public abstract class MobileEvent extends Event implements IMobileEvent {
      * @return
      */
     private IEvent getEvent(final Coord facedCoord) {
-        return eventHelper.getEvent(this,facedCoord.getX(), facedCoord.getY());
+        return RPGVDLManager.getEventHelper().getEvent(this,facedCoord.getX(), facedCoord.getY());
     }
 
     private Coord getFacedCoord() {

@@ -1,30 +1,30 @@
 package com.rpgvdl.business.map.impl;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import com.rpgvdl.business.map.IMapElement;
 import com.rpgvdl.business.Board;
-import com.rpgvdl.system.impl.InstanceManager;
 import com.rpgvdl.system.impl.Logger;
-import com.rpgvdl.system.IInstanceManager;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 
-public class MapElement implements IMapElement {
+public class MapElement implements IMapElement,Serializable {
 
-    Logger log = new Logger(this.getClass());
+    protected Logger log = new Logger(this.getClass());
 
     private int height = 32;
     private int width = 32;
     private Coord coord = new Coord(60,110);
     private int imgRepresentation = 1;
 
-    public BufferedImage[] TILE_CHAR = null;
+    public transient BufferedImage[] TILE_CHAR = null;
 
 
     protected Board board = null;
 
     public MapElement() {
-        board = (Board) InstanceManager.getInstance(IInstanceManager.BOARD);
+        board = RPGVDLManager.getBoard();
     }
 
     public final int getHeight() {

@@ -1,11 +1,10 @@
 /**
  *
  */
-package com.rpgvdl.system.impl;
+package com.rpgvdl.system.manager;
 
 import java.util.Hashtable;
 
-import com.rpgvdl.system.IInstanceManager;
 import com.rpgvdl.system.util.Invoker;
 
 
@@ -20,7 +19,7 @@ public class InstanceManager implements IInstanceManager
 
 
 
-    public static Object getInstance(final String key){
+    protected static Object getInstance(final String key){
         if(InstanceManager.allInstances!=null) {
             return InstanceManager.allInstances.get(key);
         } else {
@@ -31,9 +30,9 @@ public class InstanceManager implements IInstanceManager
 
 
     /* (non-Javadoc)
-     * @see com.rpgvdl.system.IInstanceManager#addInstance(java.lang.String, java.lang.String)
+     * @see com.rpgvdl.system.manager.IInstanceManager#addInstance(java.lang.String, java.lang.String)
      */
-    public static void addInstance(final String key, final String className) {
+    protected static void addInstance(final String key, final String className) {
         Object o=null;
         try {
             o = Invoker.createInstance(className);

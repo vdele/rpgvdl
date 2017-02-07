@@ -21,11 +21,10 @@ import com.rpgvdl.business.Board;
 import com.rpgvdl.business.map.impl.Map;
 import com.rpgvdl.system.listener.PadListener;
 import com.rpgvdl.system.Engine;
-import com.rpgvdl.system.impl.InstanceManager;
 import com.rpgvdl.system.impl.Logger;
 import com.rpgvdl.system.IConfig;
-import com.rpgvdl.system.IInstanceManager;
 import com.rpgvdl.business.display.menu.IItemMenu;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 
 /**
@@ -63,8 +62,8 @@ public class Displayer extends JPanel implements ActionListener
         timer.start();
         setFocusable(true);
         addKeyListener(new PadListener());
-        board = (Board)InstanceManager.getInstance(IInstanceManager.BOARD);
-        config = (IConfig) InstanceManager.getInstance(IInstanceManager.CONFIG);
+        board =  RPGVDLManager.getBoard();
+        config = RPGVDLManager.getConfig();
 
     }
 

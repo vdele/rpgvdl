@@ -1,8 +1,9 @@
 package com.rpgvdl.business.map.impl;
 
 
+import java.io.Serializable;
 
-public class Coord {
+public class Coord implements Serializable{
 
     private int X;
     private int Y;

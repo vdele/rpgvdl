@@ -3,13 +3,13 @@
  */
 package com.rpgvdl.system.impl;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.rpgvdl.system.IInstanceManager;
+import com.rpgvdl.system.IConfig;
 import com.rpgvdl.system.ILogger;
-import com.rpgvdl.system.impl.InstanceManager;
-import com.rpgvdl.system.config.Config;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 
 /**
@@ -17,15 +17,13 @@ import com.rpgvdl.system.config.Config;
  * @date 31 août 2015
  *
  */
-public class Logger implements ILogger {
+public class Logger implements ILogger,Serializable {
 
     String className = null;
-    String labelLevelLogger = null;
-    private Config config = null;
 
     public Logger(final Class<?> clazz){
         className = clazz.getCanonicalName();
-        config = (Config) InstanceManager.getInstance(IInstanceManager.CONFIG);
+
     }
 
     /**
@@ -80,6 +78,7 @@ public class Logger implements ILogger {
     }
 
     private void log(final String msg, final int lvl, final  Object... args){
+        IConfig config = RPGVDLManager.getConfig();
         if(config!=null && config.getLogLevel()<=lvl) {
             writeLog(msg,lvl,args);
         }

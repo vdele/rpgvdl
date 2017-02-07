@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.rpgvdl.business.Board;
 import com.rpgvdl.system.impl.Logger;
-import com.rpgvdl.system.impl.InstanceManager;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 
 /**
@@ -28,7 +28,7 @@ public class Engine extends Thread{
     Board board = null;
 
     public Engine(){
-        board = (Board) InstanceManager.getInstance(IInstanceManager.BOARD);
+        board =  RPGVDLManager.getBoard();
     }
 
     @Override

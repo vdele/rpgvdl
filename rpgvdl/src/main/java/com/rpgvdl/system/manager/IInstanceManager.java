@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.rpgvdl.system;
+package com.rpgvdl.system.manager;
 
 
 /**

@@ -3,6 +3,7 @@
  */
 package com.rpgvdl.business;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +20,22 @@ import com.rpgvdl.business.display.menu.IMenu;
  * @date 30 juin 2015
  *
  */
-public class Board
+public class Board implements Serializable
 {
 
-    Logger log = new Logger(getClass());
-    private boolean displayBackground = false;
-    private boolean displayCharacter = false;
-    private boolean inPause = false;
+    private Logger log = new Logger(getClass());
+    private transient boolean displayBackground = false;
+    private transient boolean displayCharacter = false;
+    private transient boolean inPause = false;
 
-    private MessageBox messageBox = null;
+    private transient MessageBox messageBox = null;
 
     public int SCREEN_WIDTH = 400;
 
     public int SCREEN_HEIGHT = 300;
 
 
-    public IMenu MENU_PAUSE= null;
+    public transient IMenu MENU_PAUSE= null;
 
     private List<IEvent> events = null;
 

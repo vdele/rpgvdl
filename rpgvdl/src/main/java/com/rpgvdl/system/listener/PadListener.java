@@ -8,8 +8,7 @@ import java.awt.event.KeyListener;
 
 import com.rpgvdl.business.Board;
 import com.rpgvdl.system.Engine;
-import com.rpgvdl.system.impl.InstanceManager;
-import com.rpgvdl.system.IInstanceManager;
+import com.rpgvdl.system.manager.RPGVDLManager;
 
 
 /**
@@ -34,7 +33,7 @@ public class PadListener implements KeyListener
 
     public PadListener(){
         super();
-        board = (Board)InstanceManager.getInstance(IInstanceManager.BOARD);
+        board =  RPGVDLManager.getBoard();
     }
 
     /**
