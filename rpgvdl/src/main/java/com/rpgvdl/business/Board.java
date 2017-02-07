@@ -24,8 +24,8 @@ public class Board implements Serializable
 {
 
     private Logger log = new Logger(getClass());
-    private transient boolean displayBackground = false;
-    private transient boolean displayCharacter = false;
+    private boolean displayBackground = false;
+    private boolean displayCharacter = false;
     private transient boolean inPause = false;
 
     private transient MessageBox messageBox = null;
@@ -37,7 +37,7 @@ public class Board implements Serializable
 
     public transient IMenu MENU_PAUSE= null;
 
-    private List<IEvent> events = null;
+    private List<IPerson> persons = null;
 
     private Map map = null;
 
@@ -54,11 +54,11 @@ public class Board implements Serializable
         displayBackground = !displayBackground;
     }
 
-    public  void addEvent(final IEvent evt){
-        if(events == null) {
-            events = new ArrayList<IEvent>();
+    public  void addPerson(final IPerson person){
+        if(persons == null) {
+            persons = new ArrayList<IPerson>();
         }
-        events.add(evt);
+        persons.add(person);
     }
 
     public boolean areCharactersDisplayed() {
@@ -91,8 +91,9 @@ public class Board implements Serializable
         return gameInPause() || getMessageBox().messageIsDisplayed();
     }
 
-    public List<IEvent> getEvents(){
-        return events;
+
+    public List<IPerson> getPersons(){
+        return persons;
     }
     /**
      * RORO
@@ -101,18 +102,15 @@ public class Board implements Serializable
     public IPerson getMainChar(){
 
         if(indMainChar==-1){
-            for (int i = 0; i < events.size();i++){
-                final IEvent evt = events.get(i);
-                if(evt instanceof IPerson) {
-                    if(((IPerson)evt).isMainChar()) {
+            for (int i = 0; i < persons.size();i++){
+                final IPerson person = persons.get(i);
+                    if(person.isMainChar()) {
                         indMainChar = i;
-                    }
                 }
             }
         }
-
         if(indMainChar !=-1 ){
-            return (IPerson)events.get(indMainChar);
+            return persons.get(indMainChar);
         }
         return null;
 

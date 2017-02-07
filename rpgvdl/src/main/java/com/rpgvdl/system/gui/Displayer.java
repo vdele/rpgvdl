@@ -105,7 +105,7 @@ public class Displayer extends JPanel implements ActionListener
      * @param g
      */
     private void drawEvents(final Graphics g) {
-        final List<IEvent> lstevt = board.getEvents();
+        final List<IEvent> lstevt = board.getMap().getEvents();
         if(lstevt!=null){
             for (final IEvent evt : lstevt) {
                 if(!board.DISPLAY_EVENTS && evt!=null && !(evt instanceof IPerson)){

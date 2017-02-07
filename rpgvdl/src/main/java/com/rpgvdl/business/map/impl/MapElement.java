@@ -1,12 +1,17 @@
 package com.rpgvdl.business.map.impl;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 import com.rpgvdl.business.map.IMapElement;
 import com.rpgvdl.business.Board;
+import com.rpgvdl.system.IConfig;
 import com.rpgvdl.system.impl.Logger;
 import com.rpgvdl.system.manager.RPGVDLManager;
+
+import javax.imageio.ImageIO;
 
 
 public class MapElement implements IMapElement,Serializable {
@@ -18,7 +23,7 @@ public class MapElement implements IMapElement,Serializable {
     private Coord coord = new Coord(60,110);
     private int imgRepresentation = 1;
 
-    public transient BufferedImage[] TILE_CHAR = null;
+    private transient BufferedImage[] TILE_CHAR = null;
 
 
     protected Board board = null;
@@ -37,7 +42,31 @@ public class MapElement implements IMapElement,Serializable {
     }
 
     public final BufferedImage[] getTileChar() {
+        if(TILE_CHAR == null)
+            TILE_CHAR = constructTileChar();
         return TILE_CHAR;
+    }
+
+    public BufferedImage[] constructTileChar(){
+        final BufferedImage[] tabCaseImg = new BufferedImage[12];
+        try {
+            // TODO
+            // pour l'instant fonctionne car juste le personnege principal
+            // a un fichier tile, chaque MapElement va devoir avoir un nom de fichier
+            // tile.
+            final BufferedImage img = ImageIO.read(new File(RPGVDLManager.getConfig().getTileCharSet()));
+            for (int i = 0; i < 12; i++) {
+                final int y = i / 3;
+                int x = i % 3 - 1;
+                x = x != -1 ? x : 2;
+                final BufferedImage subImg = img.getSubimage(x * getWidth(), y * getHeight(), getWidth(), getHeight());
+                tabCaseImg[i] = subImg;
+            }
+        }
+        catch(IOException e ){
+            log.logError("Unable to get tile file :@",e);
+        }
+        return tabCaseImg;
     }
 
     public BufferedImage getTileRepresentation(){

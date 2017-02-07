@@ -118,7 +118,7 @@ public abstract class MobileEvent extends Event implements IMobileEvent {
     @Override
     public BufferedImage getTileRepresentation(){
         log.logTrace("Tile_Char[@]", getImgRepresentation()+representationVariationIndex);
-        return TILE_CHAR[getImgRepresentation()+REPR_VARIATION[representationVariationIndex]];
+        return getTileChar()[getImgRepresentation()+REPR_VARIATION[representationVariationIndex]];
     }
 
     public void left() {

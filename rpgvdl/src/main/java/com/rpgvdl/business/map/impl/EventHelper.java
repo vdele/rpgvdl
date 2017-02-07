@@ -33,7 +33,7 @@ public class EventHelper implements IEventHelper {
      * @return
      */
     public IEvent getEvent(final IMobileEvent currentEvt, final int xPix, final int yPix) {
-        final List<IEvent> listEvt = board.getEvents();
+        final List<IEvent> listEvt = board.getMap().getEvents();
         if (listEvt != null) {
             for (final IEvent evt : listEvt) {
                 if (evt != null && (!(evt instanceof IPerson) || evt instanceof IPerson && !((IPerson) evt).isMainChar())) {

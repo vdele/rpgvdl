@@ -75,26 +75,18 @@ public class AppLoader
      *
      */
     private void setupCharacter() throws IOException {
-        final IPerson person = new Person("Dupont", "Gerard",100);
-        person.setMainChar(true);
-        final Hashtable<String, String> applicationParameters = config.getApplicationParameters();
+        if(board.getPersons()== null || board.getPersons().size()==0) {
+            final IPerson person = new Person("Dupont", "Gerard", 100);
+            person.setMainChar(true);
+            final Hashtable<String, String> applicationParameters = config.getApplicationParameters();
 
-        // TODO : parametrer
-        // TODO : Secure : Beware of nullPointerException
-        person.setHeight(Integer.parseInt(applicationParameters.get(IConfig.HEIGHT_CHAR)));
-        person.setWidth(Integer.parseInt(applicationParameters.get(IConfig.WIDTH_CHAR)));
-        final BufferedImage img = ImageIO.read(new File(config.getTileCharSet()));
-        final BufferedImage[] tabCaseImg = new BufferedImage[12];
-        for(int i = 0 ; i < 12;i++){
-            final int y = i/3;
-            int x = i%3-1;
-            x=x!=-1?x:2;
-            final BufferedImage subImg = img.getSubimage(x*person.getWidth(), y*person.getHeight(),person.getWidth(), person.getHeight());
-            tabCaseImg[i] = subImg;
+            // TODO : parametrer
+            // TODO : Secure : Beware of nullPointerException
+            person.setHeight(Integer.parseInt(applicationParameters.get(IConfig.HEIGHT_CHAR)));
+            person.setWidth(Integer.parseInt(applicationParameters.get(IConfig.WIDTH_CHAR)));
+            board.addPerson(person);
         }
 
-        person.setTileChar( tabCaseImg);
-        board.addEvent(person);
     }
 
 
@@ -106,22 +98,26 @@ public class AppLoader
      * @throws ClassNotFoundException
      */
     private void setupEventsMap(final MapData mapData) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        final List<Hashtable<String, String>> events = mapData.getEvents();
 
-        final Map map = board.getMap();
-        if(events!= null && events.size()>0){
-            for(final Hashtable<String, String> evt : events){
-                final IEvent newEvt = (IEvent) Invoker.createInstance(evt.get("TypeEvent"));
-                newEvt.setHeight(map.CASE_SIZE);
-                newEvt.setWidth(map.CASE_SIZE);
-                final int x = Integer.parseInt(evt.get("CoordX"));
-                final int y = Integer.parseInt(evt.get("CoordY"));
-                newEvt.setX(map.CASE_SIZE * x);
-                newEvt.setY(map.CASE_SIZE * y);
-                board.addEvent(newEvt);
+        if(board.getMap().getEvents() == null || board.getMap().getEvents().size()==0) {
+            final List<Hashtable<String, String>> events = mapData.getEvents();
+
+            // TODO
+            // les evenements doivent etre ajoutés à la map et non au board
+            final Map map = board.getMap();
+            if (events != null && events.size() > 0) {
+                for (final Hashtable<String, String> evt : events) {
+                    final IEvent newEvt = (IEvent) Invoker.createInstance(evt.get("TypeEvent"));
+                    newEvt.setHeight(map.CASE_SIZE);
+                    newEvt.setWidth(map.CASE_SIZE);
+                    final int x = Integer.parseInt(evt.get("CoordX"));
+                    final int y = Integer.parseInt(evt.get("CoordY"));
+                    newEvt.setX(map.CASE_SIZE * x);
+                    newEvt.setY(map.CASE_SIZE * y);
+                    board.getMap().addEvent(newEvt);
+                }
             }
         }
-
     }
 
 
