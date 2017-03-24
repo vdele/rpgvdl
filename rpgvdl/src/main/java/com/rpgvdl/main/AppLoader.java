@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.rpgvdl.business.map.impl.Coord;
+import com.rpgvdl.business.map.impl.Porte;
 import com.rpgvdl.entity.event.bo.Person;
 import com.rpgvdl.business.map.IEvent;
 import com.rpgvdl.entity.event.itf.IPerson;
@@ -23,6 +25,7 @@ import com.rpgvdl.business.display.menu.impl.Menu;
 import com.rpgvdl.system.IConfig;
 import com.rpgvdl.system.util.Invoker;
 import com.rpgvdl.system.manager.RPGVDLManager;
+import com.rpgvdl.system.util.ParsingFactory;
 import com.rpgvdl.system.util.SaveManager;
 
 
@@ -97,14 +100,11 @@ public class AppLoader
      * @throws InstantiationException
      * @throws ClassNotFoundException
      */
-    private void setupEventsMap(final MapData mapData) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private void setupEventsMap(final MapData mapData,Map map) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
-        if(board.getMap().getEvents() == null || board.getMap().getEvents().size()==0) {
+        if(map.getEvents() == null || map.getEvents().size()==0) {
             final List<Hashtable<String, String>> events = mapData.getEvents();
 
-            // TODO
-            // les evenements doivent etre ajoutés à la map et non au board
-            final Map map = board.getMap();
             if (events != null && events.size() > 0) {
                 for (final Hashtable<String, String> evt : events) {
                     final IEvent newEvt = (IEvent) Invoker.createInstance(evt.get("TypeEvent"));
@@ -114,7 +114,34 @@ public class AppLoader
                     final int y = Integer.parseInt(evt.get("CoordY"));
                     newEvt.setX(map.CASE_SIZE * x);
                     newEvt.setY(map.CASE_SIZE * y);
-                    board.getMap().addEvent(newEvt);
+                    map.addEvent(newEvt);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param mapData
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
+     */
+    private void setupPortesMap(final MapData mapData,Map map) {
+
+        if(map.getPortes() == null || map.getPortes().size()==0) {
+            final List<Hashtable<String, String>> portes = mapData.getPortes();
+
+            if (portes != null && portes.size() > 0) {
+                for (final Hashtable<String, String> porte : portes) {
+                    final Porte newPorte = new Porte();
+                    final int fromx = Integer.parseInt(porte.get("FromX"));
+                    final int fromy = Integer.parseInt(porte.get("FromY"));
+                    newPorte.setFrom(new Coord(fromx,fromy));
+                    final int tox = Integer.parseInt(porte.get("ToX"));
+                    final int toy = Integer.parseInt(porte.get("ToY"));
+                    newPorte.setTo(new Coord(tox,toy));
+                    newPorte.setMapNumber(Integer.parseInt(porte.get("ToMap")));
+                    map.addPorte(newPorte);
                 }
             }
         }
@@ -172,27 +199,35 @@ public class AppLoader
      *
      */
     private void setupMap() throws Exception {
-        final MapData mapData = new MapData();
-        board.setMap(mapData.getMap());
+        int nbCarte = ParsingFactory.getNumberofFiles(MapData.class.getName());
 
-        final Map map = board.getMap();
-        final BufferedImage img = ImageIO.read(new File(mapData.getNameOfTile()));
-        map.CASE_SIZE = mapData.getCaseSize();
-        final int nbcar = img.getHeight() * img.getWidth() / (map.CASE_SIZE * map.CASE_SIZE);
-        final BufferedImage[] tabCaseImg = new BufferedImage[nbcar];
-        for(int i = 0 ; i < tabCaseImg.length;i++){
-            final int y = i/4;
+        for(int ind = 1; ind <=nbCarte;ind++ ){
 
-            int x = i%4-1;
-            x=x!=-1?x:3;
-            final BufferedImage subImg = img.getSubimage(x * map.CASE_SIZE, y * map.CASE_SIZE, map.CASE_SIZE, map.CASE_SIZE);
+            final MapData mapData = new MapData(ind);
+            board.addMap(mapData.getMap());
 
-            tabCaseImg[i] = subImg;
+            final Map map = board.getMap(ind-1);
+            final BufferedImage img = ImageIO.read(new File(mapData.getNameOfTile()));
+            map.CASE_SIZE = mapData.getCaseSize();
+            final int nbcar = img.getHeight() * img.getWidth() / (map.CASE_SIZE * map.CASE_SIZE);
+            final BufferedImage[] tabCaseImg = new BufferedImage[nbcar];
+            for(int i = 0 ; i < tabCaseImg.length;i++){
+                final int y = i/4;
+
+                int x = i%4-1;
+                x=x!=-1?x:3;
+                final BufferedImage subImg = img.getSubimage(x * map.CASE_SIZE, y * map.CASE_SIZE, map.CASE_SIZE, map.CASE_SIZE);
+
+                tabCaseImg[i] = subImg;
+            }
+
+            map.IMG_CASE = tabCaseImg;
+
+            setupEventsMap(mapData,map);
+
+            setupPortesMap(mapData,map);
+
         }
-
-        map.IMG_CASE = tabCaseImg;
-
-        setupEventsMap(mapData);
 
         log.logInfo("Map has succesfully been set.");
 

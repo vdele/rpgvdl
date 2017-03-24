@@ -10,19 +10,14 @@ import java.util.List;
 // TODO pourri comme nom
 public class Map implements Serializable{
 
-    // TODO ajouter la liste d'evenement ici
-
     private int[][] map = null;
 
     public transient BufferedImage[] IMG_CASE = null;
 
     public int CASE_SIZE = 32;
 
-    // TODO
-    // Il doit s'agir d'une liste de personnages
-    // car il faut faire la différence avec
-    // les evenements associés à la carte
     private List<IEvent> events = null;
+    private List<Porte> portes = null;
 
     public Map(final int[][] map) {
         this.map = map;
@@ -66,6 +61,18 @@ public class Map implements Serializable{
 
     public List<IEvent> getEvents(){
         return events;
+    }
+
+
+    public  void addPorte(final Porte porte){
+        if(portes == null) {
+            portes = new ArrayList<Porte>();
+        }
+        portes.add(porte);
+    }
+
+    public List<Porte> getPortes(){
+        return portes;
     }
 
 }

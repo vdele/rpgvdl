@@ -39,7 +39,7 @@ public class Board implements Serializable
 
     private List<IPerson> persons = null;
 
-    private Map map = null;
+    private List<Map> maps = null;
 
 
     public boolean DISPLAY_EVENTS = false;
@@ -118,8 +118,9 @@ public class Board implements Serializable
 
 
 
-    public Map getMap() {
-        return map;
+    public Map getCurrentMap() {
+        // TODO
+        return maps.get(0);
     }
 
 
@@ -142,8 +143,17 @@ public class Board implements Serializable
         }
     }
 
-    public void setMap(final int[][] map) {
-        this.map=new Map(map);
+    public void addMap(final int[][] map) {
+
+        if(this.maps == null){
+            this.maps= new ArrayList<Map>();
+        }
+        Map m = new Map(map);
+        this.maps.add(m);
+    }
+
+    public Map getMap(int i){
+        return maps.get(i);
     }
 
     public MessageBox getMessageBox(){

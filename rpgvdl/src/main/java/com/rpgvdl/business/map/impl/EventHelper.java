@@ -33,7 +33,7 @@ public class EventHelper implements IEventHelper {
      * @return
      */
     public IEvent getEvent(final IMobileEvent currentEvt, final int xPix, final int yPix) {
-        final List<IEvent> listEvt = board.getMap().getEvents();
+        final List<IEvent> listEvt = board.getCurrentMap().getEvents();
         if (listEvt != null) {
             for (final IEvent evt : listEvt) {
                 if (evt != null && (!(evt instanceof IPerson) || evt instanceof IPerson && !((IPerson) evt).isMainChar())) {
@@ -65,7 +65,7 @@ public class EventHelper implements IEventHelper {
             xPix = evt.minX();
             yPix = newValue;
         }
-        final Map map = board.getMap();
+        final Map map = board.getCurrentMap();
         if (yPix + evt.getHeight() >= map.getMapLengthInPixels() || xPix + evt.getWidth() >= map.getMapWidthInPixels() || xPix < 0 || yPix < 0) {
             return true;
         } else if (getEvent(evt, xPix, yPix) != null) {

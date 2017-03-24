@@ -25,15 +25,17 @@ public class MapData extends DataReader
 
     private Hashtable<String, String> params = null;
     private List<Hashtable<String, String>> events = null;
+    private List<Hashtable<String, String>> portes = null;
 
     /**
      * @throws Exception
      */
-    public MapData() throws Exception {
-        super();
+    public MapData(int numOfFile) throws Exception {
+        super(numOfFile);
         setParameters();
         constructMap();
         setEvent();
+        setPortes();
     }
     private void constructMap() {
         final List<String> mapTmp = constructWithTag("MAP");
@@ -67,6 +69,15 @@ public class MapData extends DataReader
      */
     public List<Hashtable<String, String>> getEvents() {
         return events;
+    }
+
+    /**
+     * Each element of list is an event
+     *
+     * @return
+     */
+    public List<Hashtable<String, String>> getPortes() {
+        return portes;
     }
 
     public int[][] getMap(){
@@ -104,17 +115,54 @@ public class MapData extends DataReader
                     events.add(tableEvt);
                     tableEvt = null;
                 } else
-                    if(parsingMap){
-                        final String[] datas = line.split("=");
-                        if(tableEvt!=null) {
-                            tableEvt.put(datas[0], datas[1]);
-                        }
+                if(parsingMap){
+                    final String[] datas = line.split("=");
+                    if(tableEvt!=null) {
+                        tableEvt.put(datas[0], datas[1]);
                     }
+                }
             }
         }
 
 
     }
+
+
+    /**
+     *
+     */
+    private void setPortes() {
+        boolean parsingMap = false;
+        final List<String> lines = constructWithTag("PORTES");
+        Hashtable<String,String> tablePortes = null;
+        for(int i = 0; i < lines.size();i++){
+
+            final String line = lines.get(i).trim();
+            if(!line.startsWith("#")) {
+                if(line.equals("[PORTE]")) {
+                    parsingMap = true;
+                    tablePortes = new Hashtable<String, String>();
+                }
+                else if(line.equals("[/PORTE]")) {
+                    parsingMap = false;
+                    if(portes == null){
+                        portes = new ArrayList<Hashtable<String, String>>();
+                    }
+                    portes.add(tablePortes);
+                    tablePortes = null;
+                } else
+                if(parsingMap){
+                    final String[] datas = line.split("=");
+                    if(tablePortes!=null) {
+                        tablePortes.put(datas[0], datas[1]);
+                    }
+                }
+            }
+        }
+
+
+    }
+
 
     /**
      *
@@ -137,8 +185,5 @@ public class MapData extends DataReader
         }
 
     }
-
-
-
 }
 

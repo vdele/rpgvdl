@@ -79,7 +79,7 @@ public class Displayer extends JPanel implements ActionListener
     private void drawBackground(final Graphics g, final DisplayingDimension dim) {
         setBounds(dim.boundX, dim.boundY,dim.width,dim.height);
 
-        final Map map = board.getMap();
+        final Map map = board.getCurrentMap();
         if (board.isBackgroundDisplayed() && map != null) {
             for (int col = 0; col < map.getHeight(); col++) {
                 for (int lig = 0; lig < map.getWidth(); lig++) {
@@ -105,7 +105,7 @@ public class Displayer extends JPanel implements ActionListener
      * @param g
      */
     private void drawEvents(final Graphics g) {
-        final List<IEvent> lstevt = board.getMap().getEvents();
+        final List<IEvent> lstevt = board.getCurrentMap().getEvents();
         if(lstevt!=null){
             for (final IEvent evt : lstevt) {
                 if(!board.DISPLAY_EVENTS && evt!=null && !(evt instanceof IPerson)){
@@ -179,7 +179,7 @@ public class Displayer extends JPanel implements ActionListener
         boundY = boundY>0?0:boundY;
         boundX = boundX>0?0:boundX;
 
-        final Map map = board.getMap();
+        final Map map = board.getCurrentMap();
 
         int width = -boundX + board.SCREEN_WIDTH;
         int height = -boundY + board.SCREEN_HEIGHT;

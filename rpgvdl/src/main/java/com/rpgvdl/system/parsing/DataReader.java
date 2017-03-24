@@ -32,7 +32,12 @@ public abstract class DataReader
 
 
     public DataReader() throws Exception{
-        final String fileName = getNameOfGeneratedFile(getClass().getName());
+        this(-1);
+    }
+
+    public DataReader(int numOfFile) throws Exception{
+
+        final String fileName = getNameOfGeneratedFile(getClass().getName(),numOfFile);
         this.fileName = fileName;
         log.logTrace("Name of parsing file : @" , fileName);
         final File f = new File(getFilePath());
@@ -113,8 +118,10 @@ public abstract class DataReader
     }
 
     public String getFilePath(){
-        return DataReader.PATH_FILES+fileName;
+        return DataReader.PATH_FILES+getFileName();
     }
+
+
 
 
     /**
@@ -122,8 +129,9 @@ public abstract class DataReader
      * @return
      * @throws Exception
      */
-    private String getNameOfGeneratedFile(final String name) throws Exception {
-        return ParsingFactory.convertClassToDataFileName(name);
+    protected String getNameOfGeneratedFile(final String name,int numOfFile) throws Exception {
+        return ParsingFactory.convertClassToDataFileName(name,numOfFile);
     }
+
 }
 
