@@ -85,7 +85,7 @@ public class FactoryUtils
 
         List<Integer> possibilites = null;
         if(rightBorne>=leftBorne){
-            possibilites = new ArrayList<Integer>();
+            possibilites = new ArrayList<>();
         }
         for(int possibilite=leftBorne; possibilite <= rightBorne;possibilite++){
             int nbPresence = 0;
