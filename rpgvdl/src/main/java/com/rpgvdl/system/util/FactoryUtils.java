@@ -3,8 +3,9 @@
  */
 package com.rpgvdl.system.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.List;
 
 
 /**
@@ -18,7 +19,7 @@ public class FactoryUtils
 
     /**
      * retourne un lancé de dés entre 1 et nbFace
-     * @param i
+     * @param faceNumber
      * @return
      */
     public static Integer dice(final int faceNumber){
@@ -72,6 +73,38 @@ public class FactoryUtils
         //  
         return Integer.valueOf(new Double(Math.random()*(end-start+1)).intValue())+start;
     }
+
+
+    public static Integer randomWithBarycenter(int leftBorne,int rightBorne, int barycenter){
+        int faibleCoef=10;
+        int hautCoef=40;
+        int penteAscendante = (hautCoef-faibleCoef)/(barycenter-leftBorne);
+        int yPenteAsendante = faibleCoef - (penteAscendante * leftBorne);
+        int penteDescendante = (faibleCoef - hautCoef) / (rightBorne - barycenter);
+        int yPenteDescendante = hautCoef - (penteDescendante*barycenter);
+
+        List<Integer> possibilites = null;
+        if(rightBorne>=leftBorne){
+            possibilites = new ArrayList<Integer>();
+        }
+        for(int possibilite=leftBorne; possibilite <= rightBorne;possibilite++){
+            int nbPresence = 0;
+            if(possibilite<barycenter){
+                nbPresence = penteAscendante * possibilite + yPenteAsendante;
+            }
+            else{
+                nbPresence = penteDescendante * possibilite + yPenteDescendante;
+            }
+            for(int n = 0; n < nbPresence; n++){
+                possibilites.add(possibilite);
+            }
+        }
+
+        int rand = random(0, possibilites.size()-1);
+
+        return  possibilites.get(rand);
+    }
+
 
 
     /**
